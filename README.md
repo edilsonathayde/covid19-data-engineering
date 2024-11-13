@@ -55,6 +55,82 @@ O pipeline de ETL está dividido em três etapas principais: Extração, Transfo
   - Agregação de métricas e cálculos essenciais para análise.
 - **Observação sobre Qualidade dos Dados**: Análise das características dos dados, com tratamento de problemas como valores ausentes ou incorretos, assegurando que os dados transformados estejam prontos para análise.
 
+## Transformação de Dados (BRONZE para SILVER)
+
+A camada **BRONZE** contém os dados brutos em formato Delta. A camada **SILVER** é derivada da **BRONZE** e aplica tratamentos para melhorar a qualidade e a consistência dos dados, preparando-os para análises mais profundas.
+
+### Passos de Transformação
+
+1. **Tratamento de Dados Faltantes**:
+   - **Remoção de Colunas com Todos os Valores Nulos**: Colunas que não possuem nenhum valor preenchido são removidas para simplificar o dataset.
+   - **Remoção de Linhas com Valores Nulos em Colunas Essenciais**: Linhas que possuem valores nulos nas colunas `location_key` e `date` são excluídas para garantir a integridade dos dados.
+
+2. **Conversão de Tipos**:
+   - **Data**: A coluna `date` é convertida para o tipo `DateType` para facilitar análises de séries temporais.
+
+3. **Padronização de Dados Numéricos**:
+   - **Normalização**: As colunas de mobilidade (`mobility_*`) são normalizadas para a escala de 0 a 1, permitindo comparabilidade entre registros.
+
+4. **Remoção de Colunas Irrelevantes**:
+   - Colunas que permanecem irrelevantes após a limpeza inicial podem ser removidas conforme necessário.
+
+### Notebook de Transformação
+
+O notebook `02_data_transformation_to_silver.ipynb` realiza a transformação dos dados da camada **BRONZE** para **SILVER**, aplicando os tratamentos mencionados acima.
+
+### Funções de Transformação
+
+As funções de transformação estão localizadas em `src/etl/transform.py` e incluem:
+
+- `transform_bronze_to_silver(bronze_data_path, silver_data_path)`: Aplica os tratamentos e salva os dados na camada **SILVER**.
+
+### Testes
+
+Os testes para a transformação estão em `tests/test_transform.py` e garantem que as transformações são aplicadas corretamente.
+
+### Exemplos de Uso
+
+1. **Transformação BRONZE para SILVER**:
+   - Execute o notebook `02_data_transformation_to_silver.ipynb` para aplicar as transformações e salvar os dados na camada **SILVER**.
+
+### Estrutura Completa do Projeto Após a Transformação
+
+```plaintext
+covid19-data-engineering/
+│
+├── README.md
+├── config/
+│   └── config.yaml               # Arquivo de configuração com URL do CSV e configurações de ambiente
+│
+├── data/
+│   ├── raw/                      # Pasta onde o dado bruto (RAW) é salvo
+│   ├── bronze/                   # Pasta onde os dados transformados (BRONZE) são salvos
+│   └── silver/                   # Pasta onde os dados transformados (SILVER) são salvos
+│
+├── notebooks/
+│   ├── 00_preview_raw_data.ipynb  # Notebook para pré-visualizar os dados RAW
+│   ├── 01_data_extraction.ipynb  # Notebook para extrair o dado da URL e salvar na camada RAW
+│   ├── 02_data_transformation.ipynb # Notebook para transformar os dados da camada RAW para BRONZE
+│   ├── 02_data_transformation_to_silver.ipynb # Notebook para transformar BRONZE para SILVER
+│   ├── 03_data_load.ipynb        # Notebook para carregar os dados no Delta Lake
+│
+├── src/
+│   ├── __init__.py
+│   ├── etl/
+│   │   ├── __init__.py
+│   │   ├── extract.py            # Script com funções de extração de dados
+│   │   ├── transform.py          # Funções de transformação de dados de BRONZE para SILVER
+│   │
+│   └── utils/
+│       └── file_operations.py    # Funções para salvar e manipular arquivos
+│
+└── tests/
+    ├── test_extract.py           # Testes para validar a extração
+    ├── test_transform.py         # Testes para validar a transformação dos dados
+    └── test_file_operations.py   # Testes para manipulação de arquivos
+
+
+
 ### 3. Carregamento dos Dados
 
 - **Descrição**: A etapa de carregamento armazena os dados no Databricks usando o formato Delta Lake, que garante controle ACID e permite a escalabilidade e consulta eficiente.
