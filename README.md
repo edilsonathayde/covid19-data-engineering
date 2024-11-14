@@ -109,7 +109,3 @@ O monitoramento do pipeline é feito através do **Databricks Jobs Dashboard** e
 
 - **b. Identifique as métricas chave a serem monitoradas e as ferramentas utilizadas para monitoramento.**
   As métricas chave incluem **tempo de execução**, **taxa de erro** e **integridade dos dados**. O monitoramento é realizado com o **Databricks Jobs Dashboard** e os **logs do Databricks** para identificar falhas e otimizar o processo.
-
----
-
-Esse código pode ser copiado diretamente para o arquivo `.MD` do seu repositório para fornecer uma documentação clara e detalhada do projeto, respondendo a todas as perguntas de forma organizada e explicativa.
