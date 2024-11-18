@@ -72,7 +72,7 @@ O pipeline de ETL possui pontos de monitoramento para garantir que cada etapa do
 ## Estrutura de Diretórios
 
 ```plaintext
-/opt/bitnami/spark/notebooks/covid19/
+/covid19/
 ├── README.md
 ├── requirements.txt
 ├── src
