@@ -43,10 +43,23 @@ Cada notebook executa uma etapa do pipeline e explora os dados nas diferentes ca
 - **Formato de Armazenamento**: Dados são armazenados em formato Delta, escolhido pela eficiência em consultas e pela capacidade de manipular grandes volumes de dados.
 - **Justificativa**: O formato Delta permite versionamento, suporte a transações ACID e alta performance em consultas analíticas, o que é essencial para este projeto.
 
-## Análise Sumária e Visualizações
-No notebook `04_data`, é realizada uma análise exploratória para gerar insights a partir dos dados processados:
-- **Principais Indicadores**: Percentuais de casos confirmados, óbitos, recuperações, além de taxas de mortalidade e recuperação.
-- **Visualizações**: Gráficos comparativos para os principais países afetados pela COVID-19.
+
+## Análise Gráfica dos Dados de COVID-19
+
+### 1. Percentual de Casos Confirmados por País
+![Percentual de Casos Confirmados](images/grafico_casos_confirmados.png)
+
+Este gráfico mostra o percentual de casos confirmados em relação à população total para os países mais afetados.
+
+### 2. Percentual de Óbitos por País
+![Percentual de Óbitos](images/grafico_obtos_pais.png)
+
+Aqui vemos o percentual de óbitos em cada país, o que permite uma visão comparativa da gravidade do impacto da COVID-19.
+
+### 3. Taxa de Mortalidade por País
+![Taxa de Mortalidade](images/grafico_taxa_mortalidade.png)
+
+A taxa de mortalidade em relação aos casos confirmados é exibida aqui, dando uma perspectiva sobre a letalidade do vírus em cada país.
 
 ## Medidas de Segurança
 ### Durante o Processo de ETL
@@ -83,6 +96,10 @@ O pipeline de ETL possui pontos de monitoramento para garantir que cada etapa do
 │   ├── 02_data_transformation_to_bronze.ipynb
 │   ├── 03_data_transformation_to_silver.ipynb
 │   └── 04_data.ipynb
-└── config
-    ├── configs.py
-    └── spark_session.py
+├── config
+│   ├── configs.py
+│   └── spark_session.py
+└── images
+    ├── grafico_casos_confirmados.png
+    ├── grafico_obtos_pais.png
+    └── grafico_taxa_mortalidade.png
