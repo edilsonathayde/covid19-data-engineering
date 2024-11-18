@@ -1,0 +1,6 @@
+# requirements
+pip install python-dotenv 
+pip install matplotlib
+pip install seaborn
+pip install numpy 
+pip install pandas
